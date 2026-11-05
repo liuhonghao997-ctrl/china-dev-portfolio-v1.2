@@ -2,6 +2,7 @@
 Usage: pip install playwright; python -m playwright install chromium;
        place this file in repo's tests/ folder and run python tests/browser_regression.py
 """
+from playwright.sync_api import expect
 from contextlib import contextmanager
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -61,7 +62,7 @@ def run():
         page.locator('#reset').click()
         assert page.locator('#total').inner_text() == '5'
         page.locator('#import').set_input_files(str(exported_file))
-        assert page.locator('#total').inner_text() == '6'
+        expect(page.locator('#total')).to_have_text('6', timeout=10000)
         page.locator('#query').fill('E2E-001')
         page.locator('[data-delete="E2E-001"]').click()
         assert page.locator('#total').inner_text() == '5'
