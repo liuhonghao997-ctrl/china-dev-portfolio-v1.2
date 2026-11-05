@@ -42,4 +42,6 @@ jobs:
           python -m pip install playwright==1.56.0
           python -m playwright install --with-deps chromium
       - name: Run browser regression tests
-        run: python tests/browser_regression.py
+        run: |
+          python tests/browser_regression.py
+          python tests/v13_quality.py

@@ -1,1 +1,36 @@
-'use strict';let $=id=>document.getElementById(id);const money=n=>'¥'+Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});function render(){let q=Math.max(0,Number($('qty').value)||0),p=Math.max(0,Number($('unit').value)||0),t=Math.min(100,Math.max(0,Number($('tax').value)||0)),sub=q*p;$('outCustomer').textContent=$('customer').value;$('outCode').textContent=$('code').value;$('outItem').textContent=$('item').value;$('outQty').textContent=q;$('outUnit').textContent=money(p);$('outSub').textContent=money(sub);$('outTax').textContent=money(sub*t/100);$('outTotal').textContent=money(sub*(1+t/100));$('outDate').textContent=new Date().toLocaleDateString('zh-CN')}for(let x of document.querySelectorAll('input'))x.addEventListener('input',render);$('print').onclick=()=>{render();window.print()};render();
+'use strict';
+const $ = id => document.getElementById(id);
+const money = cents => '¥' + (cents / 100).toLocaleString('zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2});
+const parseInteger = value => /^\d+$/.test(value.trim()) ? Number(value) : NaN;
+const parseTwoDecimals = value => /^\d+(?:\.\d{1,2})?$/.test(value.trim()) ? Number(value) : NaN;
+const warning = $('validation');
+function render() {
+  const quantity = parseInteger($('qty').value);
+  const price = parseTwoDecimals($('unit').value);
+  const tax = parseTwoDecimals($('tax').value);
+  let error = '';
+  if (!Number.isSafeInteger(quantity) || quantity <= 0 || quantity > 1000000) error = '数量必须是 1 至 1,000,000 的整数';
+  else if (!Number.isFinite(price) || price < 0 || price > 100000000) error = '单价必须为非负金额，最多两位小数';
+  else if (!Number.isFinite(tax) || tax < 0 || tax > 100) error = '税率必须为 0–100，最多两位小数';
+  const cents = Math.round(price * 100);
+  const subtotal = cents * quantity;
+  if (!error && (!Number.isSafeInteger(subtotal) || subtotal > Number.MAX_SAFE_INTEGER / 2)) error = '金额超出可计算范围';
+  warning.textContent = error;
+  $('print').disabled = Boolean(error);
+  $('outCustomer').textContent = $('customer').value;
+  $('outCode').textContent = $('code').value;
+  $('outItem').textContent = $('item').value;
+  $('outDate').textContent = new Date().toLocaleDateString('zh-CN');
+  for (const key of ['outQty','outUnit','outSub','outTax','outTotal']) $(key).textContent = error ? '—' : '';
+  if (error) return false;
+  const taxCents = Math.round(subtotal * Math.round(tax * 100) / 10000);
+  $('outQty').textContent = quantity;
+  $('outUnit').textContent = money(cents);
+  $('outSub').textContent = money(subtotal);
+  $('outTax').textContent = money(taxCents);
+  $('outTotal').textContent = money(subtotal + taxCents);
+  return true;
+}
+for (const input of document.querySelectorAll('input')) input.addEventListener('input', render);
+$('print').onclick = () => { if (render()) window.print(); };
+render();
