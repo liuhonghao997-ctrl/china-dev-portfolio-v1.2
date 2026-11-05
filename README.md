@@ -1,12 +1,13 @@
 # 中文 IT 开发作品集（个人非商业 Demo）
 
-**当前版本：V1.2.0**
+![CI](https://img.shields.io/badge/TypeScript-checked-blue)  
+**当前版本：v1.1**（原有静态作品集 + TypeScript 库存业务核心）
 
-本仓库展示个人技术练习和模拟数据 Demo，不接收订单、不展示虚构客户案例，也不处理真实客户数据。它目前不是商业服务，也不是完整生产系统。
+本仓库为准备中国市场开发作品集的**非商业技术展示项目**。目前不接受订单、不展示虚构客户案例，也不用于实际企业数据。用户目前仍需向日本入管及雇主确认跨境有偿副业的可行性。
 
 ## 本地预览
 
-需要 Node.js 22+ 和 Python 3：
+需要 Node.js 22+ 和 Python 3（用于本地静态服务器）。
 
 ```bash
 npm install
@@ -14,48 +15,94 @@ npm run check
 npm run serve
 ```
 
-访问 http://localhost:8000/。库存 Demo 使用 ES module，请通过本地 HTTP 服务器打开，不要直接双击 `inventory.html`。
+访问 http://localhost:8000/ 。注意：库存 Demo 采用 ES module 导入，**请使用本地 HTTP 服务器访问**，不要直接双击 `inventory.html`。
 
-## 演示项目
+如只需浏览其它静态页面，直接打开 HTML 文件也可以。
 
-- `index.html`：中文开发作品集首页。
-- `inventory.html`：商品新增、编辑、删除、搜索、分类、库存预警、CSV 导入导出，以及浏览器本地保存。
-- `csv-tool.html`：根据 `id` 和 `subid` 联合匹配两张 CSV，并导出结果。
-- `quote.html`：报价明细和金额计算，可通过浏览器打印或保存 PDF。
+## 演示功能
 
-## 技术实现
+- `index.html`：中文作品集首页，强调为个人技术演示。
+- `inventory.html`：库存新增、编辑、删除、搜索、分类、库存预警、CSV 导入导出和 localStorage 保存。
+- `csv-tool.html`：双 CSV 联合匹配 `id` / `subid`，导出匹配结果。
+- `quote.html`：简单报价单计算和浏览器打印/PDF。
 
-- `src/inventory-core.ts`：TypeScript 库存校验、统计和 CSV 导入导出逻辑。
-- `dist/`：浏览器运行所需的编译产物。
-- `tests/`：Node 原生单元测试，覆盖数据校验、CSV 特殊字符、重复 SKU 和导入导出往返。
-- `.github/workflows/ci.yml`：GitHub Actions 构建和单元测试。
-- `.github/workflows/pages.yml`：GitHub Pages 静态网站部署流程。
+## 技术实现和自动测试
 
-此项目尚未迁移成 Angular 应用。它使用原生 HTML/JavaScript 与 TypeScript 库存核心。
-
-## 数据和使用限制
-
-- 库存数据只保存在当前浏览器的 `localStorage`；清除浏览器数据会丢失。
-- CSV 导入会覆盖当前库存；导入前请备份。限制为 2 MB / 1000 行，优先使用 UTF-8。
-- 项目没有服务器数据库、账号权限、多用户协作、支付或审计功能，不能用作真实库存系统。
-- 自动化单元测试不等于完整的浏览器兼容性、安全或生产验收。
-
-## 非商业状态
-
-在确认适用的工作许可、雇主规定和税务要求前，不开展收费服务、签约或客户数据处理。个人合规材料应保存在私密位置，不放入公开仓库。此项目不构成法律或税务意见。
-
-## GitHub 检查记录（2026-11-05）
-
-目标仓库为 [liuhonghao997-ctrl/gpt123](https://github.com/liuhonghao997-ctrl/gpt123)，默认分支为 `main`。最近检查到的提交是 `60dd28c`（网页上传）。该提交包含根目录页面和文档，但缺少 `src/`、`dist/`、`tests/` 与 `.github/workflows/`，所以当时库存页面引用的模块无法在远端加载，GitHub Actions 也没有工作流运行记录。
-
-本 V1.2.0 项目包包含上述缺失目录。将完整项目同步到仓库后，先查看 Actions 中的构建与 Pages 部署运行结果；若要启用 Pages，在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。预期网址是 https://liuhonghao997-ctrl.github.io/gpt123/，需以成功部署和实际访问结果为准。
-
-## 本地检查
+- `src/inventory-core.ts`：纯 TypeScript 库存校验、库存统计、CSV 状态机解析、导入导出逻辑。
+- `dist/`：编译后的浏览器可用 JavaScript 文件（随项目包提供，保证不安装工具也能用静态 HTTP 服务预览）。
+- `inventory.js`：浏览器交互层，使用 TypeScript 核心输出。
+- `tests/`：Node 原生测试，包括 CSV 特殊字符、数据校验、重复 SKU、导入/导出往返。
+- `.github/workflows/ci.yml`：push / pull request 后在 GitHub Actions 上安装依赖、构建并运行测试。
 
 ```bash
-npm run build
-npm test
-npm run check
+npm run build   # 编译 TypeScript
+npm test        # 执行 Node 自动测试（需要先 build）
+npm run check  # 构建并测试
 ```
 
-库存核心的 4 项单元测试已在本地预编译产物上通过。GitHub Actions 和线上页面仍需在代码同步后确认。
+> 这**不是 Angular 项目**，而是 Angular 迁移前的 TypeScript 业务逻辑抽取。Angular UI 改造需要另一个开发阶段，不应在个人作品集中宣传为 Angular 已实现。
+
+## 上传你已经创建的 GitHub 仓库
+
+GitHub 已连接，但目前连接器没有显示可访问的仓库，所以并未将本项目写入 GitHub。你可以在 GitHub 设置中授权 ChatGPT/GitHub 集成访问新仓库，也可以自行执行：
+
+```bash
+git init
+git add .
+git commit -m "Build Chinese developer portfolio demos with TypeScript core and CI"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git push -u origin main
+```
+
+将 `YOUR_USERNAME/YOUR_REPOSITORY` 替换成真实仓库。若远端已有 README 或提交，请先 pull/rebase，**不要强制推送覆盖远端内容**。仓库发布为公开前，检查隐私信息及非商业展示文案。
+
+## 公开展示与限制
+
+- 本项目仅是模拟数据和技术 Demo，不含正式账户系统、服务器数据库、权限、多用户、支付或审计日志。
+- 数据保存在当前浏览器 localStorage，清除浏览器数据会丢失。
+- CSV 导入采取**覆盖**模式，上传前应备份；目前最大 2MB / 1000 行，UTF-8 优先。
+- 程序性自动测试通过不等于完整端到端、兼容性或安全测试完成。
+- 用户在日本持技人国签证，在有偿接单前需确认入管资格外活动/现有资格适用性及公司副业规定；人民币收款不自动豁免法律或税务义务。
+
+详情见 `LEGAL_AND_LAUNCH.md`。
+
+## GitHub 现状与发布说明（2026-11-05）
+
+目标仓库：`liuhonghao997-ctrl/gpt123`（public，默认分支 main，检查时为空）。连接器元数据显示账号有 push 权限，但实际写入返回 HTTP 403 `Resource not accessible by integration`。因此此项目**尚未提交到 GitHub**，请自行上传或重新配置 GitHub App 的 Contents 读写授权。
+
+### 最快捷发布
+
+1. 解压项目包，确保 `index.html`、`inventory.html`、`src/`、`dist/`、`.github/` 等位于仓库根目录，而不是外层同名文件夹。
+2. 登录 GitHub，进入 `https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2`，通过 **Add file → Upload files** 上传解压后的文件（网页上传时务必保留子目录结构；推荐使用 GitHub Desktop 以避免漏传 `.github` 等隐藏目录）。
+3. 如果电脑装有 Git，可在解压后的 `china-dev-portfolio` 目录执行：
+
+```bash
+git init
+git add .
+git commit -m "feat: add Chinese portfolio demos and CI"
+git branch -M main
+git remote add origin https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2.git
+git push -u origin main
+```
+
+4. 在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。推送 main 后，`.github/workflows/pages.yml` 将尝试构建并发布静态站点。站点预计使用 `https://liuhonghao997-ctrl.github.io/gpt123/`，以 Pages 实际显示的地址为准，首次发布前不能视为可用。
+5. 在仓库的 **Actions** 中查看 `TypeScript CI` 和 `Deploy static portfolio to GitHub Pages` 是否都成功。如果失败，先查看失败日志。
+
+### 本地测试
+
+```bash
+npm install
+npm run check
+python3 -m http.server 8000
+```
+
+可选浏览器端到端测试（本次封装环境限制 Chromium 访问 `localhost`，未能完成浏览器验收）：
+
+```bash
+python3 -m pip install playwright
+python3 -m playwright install chromium
+python3 tests/browser_smoke.py
+```
+
+**当前页面由原生 HTML/JS 和 TypeScript 核心构成，并非完整 Angular 项目；不得宣传为已经完成 Angular 迁移。**
