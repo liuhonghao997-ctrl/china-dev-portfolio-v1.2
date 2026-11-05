@@ -56,8 +56,8 @@ npm run check   # 构建并执行测试
 - GitHub 仓库：<https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2>
 - 默认分支：`main`；仓库为公开仓库。
 - 在线作品集：<https://liuhonghao997-ctrl.github.io/china-dev-portfolio-v1.2/>
-- TypeScript CI：[最新检查记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/runs/41987679192)，检查时已通过。
-- GitHub Pages 部署：[最新部署记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/runs/41987679057)，检查时已成功。
+- TypeScript CI：[查看运行记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/workflows/ci.yml)，截至 2026-11-05 最近一次检查已通过。
+- GitHub Pages 部署：[查看运行记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/workflows/pages.yml)，截至 2026-11-05 最近一次部署已成功。
 
 Actions 状态可能随新提交变化，请以仓库中的最新运行记录为准。
 
