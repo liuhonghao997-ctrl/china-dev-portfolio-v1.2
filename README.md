@@ -1,9 +1,9 @@
 # 中文 IT 开发作品集（个人非商业 Demo）
 
-![CI](https://img.shields.io/badge/TypeScript-checked-blue)  
-**当前版本：v1.1**（原有静态作品集 + TypeScript 库存业务核心）
+![CI](https://img.shields.io/badge/TypeScript-checked-blue)
+**当前版本：v1.2**（中文作品集 + TypeScript 库存管理 Demo）
 
-本仓库为准备中国市场开发作品集的**非商业技术展示项目**。目前不接受订单、不展示虚构客户案例，也不用于实际企业数据。用户目前仍需向日本入管及雇主确认跨境有偿副业的可行性。
+本仓库是个人非商业技术展示项目，使用模拟数据，不用于真实企业业务。目前不提供收费服务；如未来考虑商业化，会先确认适用规定及雇主政策。
 
 ## 本地预览
 
@@ -42,34 +42,25 @@ npm run check  # 构建并测试
 
 > 这**不是 Angular 项目**，而是 Angular 迁移前的 TypeScript 业务逻辑抽取。Angular UI 改造需要另一个开发阶段，不应在个人作品集中宣传为 Angular 已实现。
 
-## 上传你已经创建的 GitHub 仓库
-
-GitHub 已连接，但目前连接器没有显示可访问的仓库，所以并未将本项目写入 GitHub。你可以在 GitHub 设置中授权 ChatGPT/GitHub 集成访问新仓库，也可以自行执行：
-
-```bash
-git init
-git add .
-git commit -m "Build Chinese developer portfolio demos with TypeScript core and CI"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
-
-将 `YOUR_USERNAME/YOUR_REPOSITORY` 替换成真实仓库。若远端已有 README 或提交，请先 pull/rebase，**不要强制推送覆盖远端内容**。仓库发布为公开前，检查隐私信息及非商业展示文案。
-
 ## 公开展示与限制
 
 - 本项目仅是模拟数据和技术 Demo，不含正式账户系统、服务器数据库、权限、多用户、支付或审计日志。
 - 数据保存在当前浏览器 localStorage，清除浏览器数据会丢失。
 - CSV 导入采取**覆盖**模式，上传前应备份；目前最大 2MB / 1000 行，UTF-8 优先。
 - 程序性自动测试通过不等于完整端到端、兼容性或安全测试完成。
-- 用户在日本持技人国签证，在有偿接单前需确认入管资格外活动/现有资格适用性及公司副业规定；人民币收款不自动豁免法律或税务义务。
+- 本项目仅用于非商业技术展示，不接受付费订单，也不用于真实客户或企业数据。开始任何收费服务前，应先确认适用规定及雇主政策。
 
 详情见 `LEGAL_AND_LAUNCH.md`。
 
-## GitHub 现状与发布说明（2026-11-05）
+## GitHub 仓库与线上演示（检查于 2026-11-05）
 
-目标仓库：`liuhonghao997-ctrl/gpt123`（public，默认分支 main，检查时为空）。连接器元数据显示账号有 push 权限，但实际写入返回 HTTP 403 `Resource not accessible by integration`。因此此项目**尚未提交到 GitHub**，请自行上传或重新配置 GitHub App 的 Contents 读写授权。
+- GitHub 仓库：<https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2>
+- 默认分支：`main`；仓库为公开仓库。
+- 在线作品集：<https://liuhonghao997-ctrl.github.io/china-dev-portfolio-v1.2/>
+- TypeScript CI：[运行记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/runs/41986096528)，检查时已通过。
+- GitHub Pages 部署：[运行记录](https://github.com/liuhonghao997-ctrl/china-dev-portfolio-v1.2/actions/runs/41986096656)，检查时已成功。
+
+Actions 状态可能随新提交变化，请以仓库中的最新运行记录为准。
 
 ### 最快捷发布
 
@@ -86,7 +77,7 @@ git remote add origin https://github.com/liuhonghao997-ctrl/china-dev-portfolio-
 git push -u origin main
 ```
 
-4. 在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。推送 main 后，`.github/workflows/pages.yml` 将尝试构建并发布静态站点。站点预计使用 `https://liuhonghao997-ctrl.github.io/gpt123/`，以 Pages 实际显示的地址为准，首次发布前不能视为可用。
+4. 在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。推送 main 后，`.github/workflows/pages.yml` 将尝试构建并发布静态站点。站点预计使用 `https://liuhonghao997-ctrl.github.io/china-dev-portfolio-v1.2/`，以 Pages 实际显示的地址为准，首次发布前不能视为可用。
 5. 在仓库的 **Actions** 中查看 `TypeScript CI` 和 `Deploy static portfolio to GitHub Pages` 是否都成功。如果失败，先查看失败日志。
 
 ### 本地测试
